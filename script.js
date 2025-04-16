@@ -1,40 +1,45 @@
-let gridSize = 16;
-let selectedColor = '#ff0000';
-let container = document.querySelector('.container');
-let gridSizeButton = document.querySelector('button');
-
-document.addEventListener( 'DOMContentLoaded', () => makeGrid(gridSize) );
+let gridSize = 16
+let fillColor = 'red';
+const gridSizeButton = document.querySelector('#grid-size-button');
+document.addEventListener('DOMContentLoaded', createGrid);
 gridSizeButton.addEventListener('click', changeGridSize);
-container.addEventListener('mouseover', (e) => {
-  if (e.target !== e.currentTarget) {
-    e.target.style.backgroundColor = selectedColor;
-  }
-})
 
-function makeGrid(size) {
-  const totalDivs = size ** 2;
-  const divDimnesion = (960 / size);
-  for (let i = 1; i <= totalDivs; i++) {
-    let box = document.createElement('div');
-    box.style.width = divDimnesion + 'px';
-    box.style.height = divDimnesion + 'px';
-    box.classList.add("box");
-    container.appendChild(box);
+function createGrid() {
+  const gridContainer = document.querySelector('.container');
+
+  for (let i = 0; i < gridSize; i++) {
+    const gridRow = document.createElement('div');
+    gridRow.classList.add('grid-row')
+
+    for (let i = 0; i < gridSize; i++) {
+      const gridItem = document.createElement('div');
+      gridItem.classList.add('grid-item')
+
+      gridRow.appendChild(gridItem)
+      gridItem.addEventListener('mouseenter', paintItem)
+    }
+
+    gridContainer.appendChild(gridRow);
   }
+}
+
+function paintItem(e) {
+  e.target.style.backgroundColor = fillColor;
 }
 
 function changeGridSize() {
-  let size;
   do {
-    size = Number( prompt("Enter a size upto 100") );
-  } while(isNaN(size) || size > 100);
-  
-  if (size) {
-    container.textContent = '';
-    makeGrid(size);
-  } 
-}
+    gridSize = Number( prompt("Enter a size upto 100") );
+  } while(isNaN(gridSize) || gridSize > 101);
 
-// function paintBox(box) {
-//   box.style.backgroundColor = selectedColor;
-// }
+  if (gridSize > 16 && gridSize < 101) {
+    while (document.querySelectorAll('.grid-item').length > 0) {
+      document.querySelectorAll('.grid-item')[0].remove();
+    }
+  
+    createGrid()
+  } else {
+
+  }
+
+}
