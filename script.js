@@ -1,5 +1,4 @@
 let gridSize = 16
-let fillColor = 'red';
 const gridSizeButton = document.querySelector('#grid-size-button');
 document.addEventListener('DOMContentLoaded', createGrid);
 gridSizeButton.addEventListener('click', changeGridSize);
@@ -24,6 +23,7 @@ function createGrid() {
 }
 
 function paintItem(e) {
+  const fillColor = `rgb(${Math.floor(Math.random() * 255) + 1}, ${Math.floor(Math.random() * 255) + 1}, ${Math.floor(Math.random() * 255) + 1})`;
   e.target.style.backgroundColor = fillColor;
 }
 
